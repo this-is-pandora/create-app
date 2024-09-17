@@ -12,23 +12,14 @@ function add_folders() {
 }
 
 function add_files() {
-    CMAKE_VALUE="
-    cmake_minimum_required(VERSION 3.16)\n
-    project($1)\n
+    CMAKE_VALUE="cmake_minimum_required(VERSION 3.16)\n
+\nproject($1)\nset(CMAKE_CXX_STANDARD 17) # Set C++ standard\n
+\nadd_executable($1 src/main.cpp)\n
+\ninclude_directories(include)"
 
-    set(CMAKE_CXX_STANDARD 17) # Set C++ standard\n
-
-    add_executable($1 src/main.cpp)\n
-
-    include_directories(include)"
-
-    MAIN_FXN="
-    #include <iostream>\n
-    int main(int argc, char *argv[])\n
-    {\n
-    \tstd::cout << 'Hello, world!' << std::endl;\n
-    \treturn 0;\n
-    }"
+    MAIN_FXN="#include <iostream>\n
+\nint main(int argc, char *argv[])\n{\n\tstd::cout << 'Hello, world!' << std::endl;\n
+\treturn 0;\n}"
 
     echo "adding files..."
     touch "src/main.cpp"
@@ -42,3 +33,5 @@ function main() {
     add_files
     echo "creating done..."
 }
+
+main
