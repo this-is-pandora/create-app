@@ -1,20 +1,29 @@
 #!/bin/bash
 
-# example: create-cpp irc-chat
+# project name
+PROJ=$1
+
+# example: create-app -cpp irc-chat or create-app -c irc-chat
+function add_c_files() {
+    MAIN_FXN=""
+    MAKEFILE=""
+    touch "src/main.c"
+    touch "Makefile"
+}
 
 function add_folders() {
     echo "creating folders..."
-    mkdir -p $1
-    cd $1
+    mkdir -p "${PROJ}"
+    cd "${PROJ}"
     mkdir "src"
     mkdir "include"
     mkdir "test"
 }
 
-function add_files() {
+function add_cpp_files() {
     CMAKE_VALUE="cmake_minimum_required(VERSION 3.16)\n
-\nproject($1)\nset(CMAKE_CXX_STANDARD 17) # Set C++ standard\n
-\nadd_executable($1 src/main.cpp)\n
+\nproject(${PROJ})\nset(CMAKE_CXX_STANDARD 17) # Set C++ standard\n
+\nadd_executable(${PROJ} src/main.cpp)\n
 \ninclude_directories(include)"
 
     MAIN_FXN="#include <iostream>\n
@@ -30,7 +39,7 @@ function add_files() {
 
 function main() {
     add_folders
-    add_files
+    add_cpp_files
     echo "creating done..."
 }
 
